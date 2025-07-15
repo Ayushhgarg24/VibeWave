@@ -131,8 +131,8 @@ function Home() {
 }
 ```
 
-Success.jsx
-
+- Success.jsx
+```js
 function Success() {
   return (
     <div style={styles.container}>
@@ -144,30 +144,35 @@ function Success() {
     </div>
   );
 }
+```
 
 # 🚀 Run Locally
-Backend (Server)
-
+- Backend (Server)
+```bash
 cd Server
 npm install
 node index.js
-Frontend (Client)
+```
+- Frontend (Client)
+```bash
 cd client
 npm install
 npm start
-🛡️ Security Notes
+```
+
+## 🛡️ Security Notes
 ✅ Never push .env to GitHub
 
 ✅ Use .gitignore properly
 
 ✅ For production, store secrets in hosting config/environment
 
-📬 Contact Me
-🔗 GitHub: Ayushhgarg24
+## 📬 Contact Me
+# 🔗 GitHub: Ayushhgarg24
 
-💼 LinkedIn: ayushgarg
+# 💼 LinkedIn: ayushgarg
 
-📧 Email: ayush.garg@example.com (replace with your real email)
+# 📧 Email: ayush.garg@example.com (replace with your real email)
 
-⭐ Give a Star
-If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
+## ⭐ Give a Star
+- If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
