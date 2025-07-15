@@ -168,11 +168,11 @@ npm start
 ✅ For production, store secrets in hosting config/environment
 
 ## 📬 Contact Me
-# 🔗 GitHub: Ayushhgarg24
+- 🔗 GitHub: [Ayushhgarg24](https://github.com/Ayushhgarg24)
 
-# 💼 LinkedIn: ayushgarg
+- 💼 LinkedIn: [ayushgarg](http://www.linkedin.com/in/ayushh-garg)
 
-# 📧 Email: ayush.garg@example.com (replace with your real email)
+- 📧 Email: ayushgarg241204@gmail.com
 
 ## ⭐ Give a Star
 - If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
