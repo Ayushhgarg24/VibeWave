@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function Home() {
   const handleLogin = () => {
+    console.log("Redirecting to:", `${process.env.REACT_APP_BACKEND_URI}/login`);
 window.location.href = `${process.env.REACT_APP_BACKEND_URI}/login`;
   };
 
