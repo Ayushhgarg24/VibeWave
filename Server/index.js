@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.send("Backend working!");
@@ -98,7 +98,7 @@ await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
   }
 });
 
-res.redirect(`http://localhost:3000/success`);
+res.redirect(`${process.env.FRONTEND_URI}/success`);
 
   } catch (error) {
     console.error('Error fetching access token:', error.response.data);
@@ -107,5 +107,6 @@ res.redirect(`http://localhost:3000/success`);
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`✅ Server is running on port ${PORT}`);
 });
+
