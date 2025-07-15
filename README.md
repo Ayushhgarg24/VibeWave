@@ -160,13 +160,6 @@ npm install
 npm start
 ```
 
-## 🛡️ Security Notes
-✅ Never push .env to GitHub
-
-✅ Use .gitignore properly
-
-✅ For production, store secrets in hosting config/environment
-
 ## 📬 Contact Me
 - 🔗 GitHub: [Ayushhgarg24](https://github.com/Ayushhgarg24)
 
@@ -174,5 +167,5 @@ npm start
 
 - 📧 Email: ayushgarg241204@gmail.com
 
-## ⭐ Give a Star
-- If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
+### ⭐ Give a Star
+ If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
