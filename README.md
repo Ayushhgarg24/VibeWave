@@ -46,7 +46,7 @@
 ---
 
 ## 📂 Project Structure
-
+```
 VibeWave/
 ├── client/ # React frontend
 │ ├── public/
@@ -58,10 +58,7 @@ VibeWave/
 │ └── .env
 ├── .gitignore
 └── README.md
-
-csharp
-Copy
-Edit
+```
 
 ---
 
@@ -117,7 +114,7 @@ app.get("/callback", async (req, res) => {
 ---
 
 ## 💻 Frontend Code Highlights
-
+- Home.jsx
 ```js
 function Home() {
   const handleLogin = () => {
