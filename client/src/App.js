@@ -19,9 +19,9 @@ function Home() {
           Built by <strong>Ayush Garg</strong> — Full Stack Dev & Engineer at Heart 💻⚡
         </p>
         <p>
-          <a href="mailto:ayush@example.com" style={styles.footerLink}>Email</a> |{" "}
-          <a href="https://github.com/yourgithubusername" target="_blank" rel="noreferrer" style={styles.footerLink}>GitHub</a> |{" "}
-          <a href="https://www.linkedin.com/in/yourlinkedin/" target="_blank" rel="noreferrer" style={styles.footerLink}>LinkedIn</a>
+          <a href="mailto:ayushgarg241204@gmail.com" style={styles.footerLink}>Email</a> |{" "}
+          <a href="https://github.com/Ayushhgarg24" target="_blank" rel="noreferrer" style={styles.footerLink}>GitHub</a> |{" "}
+          <a href="http://www.linkedin.com/in/ayushh-garg" target="_blank" rel="noreferrer" style={styles.footerLink}>LinkedIn</a>
         </p>
       </footer>
     </div>
@@ -60,9 +60,9 @@ function Success() {
           Built by <strong>Ayush Garg</strong> — Full Stack Dev & Engineer at Heart 💻⚡
         </p>
         <p>
-          <a href="mailto:ayush@example.com" style={styles.footerLink}>Email</a> |{" "}
-          <a href="https://github.com/yourgithubusername" target="_blank" rel="noreferrer" style={styles.footerLink}>GitHub</a> |{" "}
-          <a href="https://www.linkedin.com/in/yourlinkedin/" target="_blank" rel="noreferrer" style={styles.footerLink}>LinkedIn</a>
+          <a href="mailto:ayushgarg241204@gmail.com" style={styles.footerLink}>Email</a> |{" "}
+          <a href="https://github.com/Ayushhgarg24" target="_blank" rel="noreferrer" style={styles.footerLink}>GitHub</a> |{" "}
+          <a href="http://www.linkedin.com/in/ayushh-garg" target="_blank" rel="noreferrer" style={styles.footerLink}>LinkedIn</a>
         </p>
       </footer>
     </div>

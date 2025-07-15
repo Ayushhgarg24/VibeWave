@@ -22,14 +22,23 @@ app.get("/login", (req, res) => {
     "user-top-read"
   ];
 
-  const authUrl = `https://accounts.spotify.com/authorize` +
-    `?response_type=code` +
-    `&client_id=${process.env.CLIENT_ID}` +
-    `&scope=${encodeURIComponent(scopes.join(" "))}` +
-    `&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}`;
+  const redirectUri = process.env.REDIRECT_URI;
 
-  res.redirect(authUrl);
+  if (!redirectUri) {
+    return res.status(500).send("❌ REDIRECT_URI is not defined in environment variables");
+  }
+
+  console.log("🔁 Redirecting to Spotify with redirect URI:", redirectUri);
+
+  const authUrl = new URL("https://accounts.spotify.com/authorize");
+  authUrl.searchParams.set("response_type", "code");
+  authUrl.searchParams.set("client_id", process.env.CLIENT_ID);
+  authUrl.searchParams.set("scope", scopes.join(" "));
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+
+  res.redirect(authUrl.toString());
 });
+
 
 app.get("/callback", async (req, res) => {
   const code = req.query.code || null;
