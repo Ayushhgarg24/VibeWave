@@ -6,7 +6,7 @@
 
 ---
 
-### 🧠 How it Works (In Simple Terms)
+## 🧠 How it Works (In Simple Terms)
 
 1. **You log in with Spotify**
 2. App fetches your **top artists** using Spotify's Web API
@@ -16,12 +16,12 @@
 
 ---
 
-### ⚙️ Tech Stack
+## ⚙️ Tech Stack
 
-| Frontend                | Backend                    | APIs / Services     |
-|-------------------------|----------------------------|----------------------|
-| React.js (CRA)          | Node.js + Express.js       | Spotify Web API 🎵   |
-| HTML5, CSS3 (inline styles) | Axios, dotenv, cors         | OAuth 2.0 Auth Flow  |
+| Frontend                     | Backend                | APIs / Services       |
+|-----------------------------|------------------------|------------------------|
+| React.js (CRA)              | Node.js + Express.js   | Spotify Web API 🎵     |
+| HTML5, CSS3 (inline styles) | Axios, dotenv, cors    | OAuth 2.0 Auth Flow    |
 
 ---
 
@@ -59,6 +59,10 @@ VibeWave/
 ├── .gitignore
 └── README.md
 
+csharp
+Copy
+Edit
+
 ---
 
 ## 🧠 Backend Code Explained (`Server/index.js`)
@@ -74,7 +78,7 @@ const app = express();
 app.use(cors());
 const PORT = 5000;
 
-🔐 Spotify Login Endpoint
+// 🔐 Spotify Login Endpoint
 app.get("/login", (req, res) => {
   const scopes = [ /* scopes here */ ];
   const authUrl = `https://accounts.spotify.com/authorize?...`;
@@ -85,7 +89,7 @@ app.get("/callback", async (req, res) => {
   const code = req.query.code;
   
   const response = await axios.post('https://accounts.spotify.com/api/token', {
-    ... // Access Token logic
+    // Access Token logic
   });
 
   const access_token = response.data.access_token;
@@ -108,9 +112,13 @@ app.get("/callback", async (req, res) => {
 
   res.send(`<h2>✅ Playlist Created Successfully!</h2>`);
 });
+ ```
 
+---
 
-📍 Home.jsx
+## 💻 Frontend Code Highlights
+
+```js
 function Home() {
   const handleLogin = () => {
     window.location.href = "http://localhost:5000/login";
@@ -124,37 +132,45 @@ function Home() {
     </div>
   );
 }
+```
+
+Success.jsx
 
 function Success() {
   return (
     <div style={styles.container}>
       <h2>✅ Playlist Created Successfully!</h2>
       <iframe src="https://open.spotify.com/embed/playlist/..." ... />
-      <a href="https://open.spotify.com/playlist/..." target="_blank">Open on Spotify</a>
+      <a href="https://open.spotify.com/playlist/..." target="_blank">
+        Open on Spotify
+      </a>
     </div>
   );
 }
 
-🚀 Run Locally
-Backend(Server)
+# 🚀 Run Locally
+Backend (Server)
+
 cd Server
 npm install
 node index.js
-Frontend(Client)
+Frontend (Client)
 cd client
 npm install
 npm start
-
 🛡️ Security Notes
-Never push .env to GitHub
+✅ Never push .env to GitHub
 
-Always use .gitignore
+✅ Use .gitignore properly
 
-For production, consider storing secrets in environment hosting configs
+✅ For production, store secrets in hosting config/environment
 
 📬 Contact Me
-🔗 GitHub : https://github.com/Ayushhgarg24
-💼 LinkedIn : https://linkedin.com/in/ayushgarg
+🔗 GitHub: Ayushhgarg24
+
+💼 LinkedIn: ayushgarg
+
+📧 Email: ayush.garg@example.com (replace with your real email)
 
 ⭐ Give a Star
-If you like this project or it helped you build your own, drop a ⭐ on VibeWave Repo
+If you like this project or it helped you build your own, drop a ⭐ on the VibeWave repo. Let’s make the world vibe! 🎵
