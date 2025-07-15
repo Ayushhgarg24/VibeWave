@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function Home() {
   const handleLogin = () => {
-    window.location.href = "http://localhost:5000/login";
+window.location.href = `${process.env.REACT_APP_BACKEND_URI}/login`;
   };
 
   return (
