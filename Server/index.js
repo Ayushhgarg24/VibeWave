@@ -38,6 +38,9 @@ app.get("/login", (req, res) => {
 
 // ✅ Spotify Callback Route
 app.get("/callback", async (req, res) => {
+     if (req.query.error) {
+    return res.status(400).send("Spotify authorization denied.");
+  }
   const code = req.query.code || null;
   if (!code) {
     return res.status(400).send("Authorization code missing.");
