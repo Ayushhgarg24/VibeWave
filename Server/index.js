@@ -8,6 +8,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
+// ✅ Home route to check server is alive
 app.get("/", (req, res) => {
   res.send("Backend working!");
 });
@@ -31,21 +32,15 @@ app.get("/login", (req, res) => {
     `&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
   console.log("🔁 Redirecting to Spotify with redirect URI:", redirectUri);
-  console.log("🔁 Final Auth URL:", authUrl);
-
   res.redirect(authUrl);
 });
 
-
+// ✅ Spotify Callback Route
 app.get("/callback", async (req, res) => {
-  const code = req.query.code;
-
-  if (!code) {
-    console.error("❌ No authorization code received.");
-    return res.status(400).send("Authorization failed. Please try logging in again.");
-  }
+  const code = req.query.code || null;
 
   try {
+    // 🔐 Exchange code for access token
     const response = await axios.post('https://accounts.spotify.com/api/token', null, {
       params: {
         grant_type: 'authorization_code',
@@ -61,70 +56,62 @@ app.get("/callback", async (req, res) => {
 
     const access_token = response.data.access_token;
 
-    // ✅ Continue with your existing logic...
+    // 👤 Get user profile
+    const userProfile = await axios.get('https://api.spotify.com/v1/me', {
+      headers: { Authorization: `Bearer ${access_token}` }
+    });
+    const userId = userProfile.data.id;
+
+    // 🎨 Get top artists
     const topArtistsResponse = await axios.get('https://api.spotify.com/v1/me/top/artists', {
+      headers: { Authorization: `Bearer ${access_token}` }
+    });
+    const topArtists = topArtistsResponse.data.items.slice(0, 5);
+
+    // 🎶 Create playlist
+    const newPlaylist = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+      name: "VibeWave 🎶 - Made Just for You",
+      description: "A custom playlist based on your top artists ❤️",
+      public: false
+    }, {
       headers: {
-        Authorization: `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`,
+        'Content-Type': 'application/json'
       }
     });
 
-    // ...rest of your code continues
+    const playlistId = newPlaylist.data.id;
+
+    // 🎧 Collect track URIs
+    let trackURIs = [];
+    for (let artist of topArtists) {
+      const tracksResponse = await axios.get(`https://api.spotify.com/v1/artists/${artist.id}/top-tracks?market=IN`, {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      const topTracks = tracksResponse.data.tracks.slice(0, 2);
+      topTracks.forEach(track => trackURIs.push(track.uri));
+    }
+
+    // ➕ Add tracks to playlist
+    await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      uris: trackURIs
+    }, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    // ✅ Redirect to frontend
+    res.redirect(`${process.env.FRONTEND_URI}/success`);
+
   } catch (error) {
     console.error('❌ Error fetching access token:', error.response?.data || error.message);
     res.status(500).send("Something went wrong during token exchange.");
   }
 });
 
-
-const topArtists = topArtistsResponse.data.items.slice(0, 5); // get top 5
-const userProfile = await axios.get('https://api.spotify.com/v1/me', {headers:{
-    Authorization: `Bearer ${access_token}`
-}
-});
-const userId = userProfile.data.id;
-const newPlaylist = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-  name: "VibeWave 🎶 - Made Just for You",
-  description: "A custom playlist based on your top artists ❤️",
-  public: false
-}, {
-  headers: {
-    Authorization: `Bearer ${access_token}`,
-    'Content-Type': 'application/json'
-  }
-});
-const playlistId = newPlaylist.data.id;
-
-let trackURIs = [];
-
-for (let artist of topArtists) {
-  const tracksResponse = await axios.get(`https://api.spotify.com/v1/artists/${artist.id}/top-tracks?market=IN`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`
-    }
-  });
-
-  const topTracks = tracksResponse.data.tracks.slice(0, 2); // Pick top 2 tracks per artist
-  topTracks.forEach(track => trackURIs.push(track.uri));
-}
-// Step 3: Add tracks to the playlist
-await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-  uris: trackURIs
-}, {
-  headers: {
-    Authorization: `Bearer ${access_token}`,
-    'Content-Type': 'application/json'
-  }
-});
-
-res.redirect(`${process.env.FRONTEND_URI}/success`);
-
-  } catch (error) {
-    console.error('Error fetching access token:', error.response.data);
-    res.send("Error during token exchange.");
-  }
-});
-
+// ✅ Start the server
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
 });
-
