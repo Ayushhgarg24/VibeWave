@@ -24,24 +24,26 @@ app.get("/login", (req, res) => {
 
   const redirectUri = process.env.REDIRECT_URI;
 
-  if (!redirectUri) {
-    return res.status(500).send("❌ REDIRECT_URI is not defined in environment variables");
-  }
+  const authUrl = `https://accounts.spotify.com/authorize` +
+    `?response_type=code` +
+    `&client_id=${process.env.CLIENT_ID}` +
+    `&scope=${encodeURIComponent(scopes.join(" "))}` +
+    `&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
   console.log("🔁 Redirecting to Spotify with redirect URI:", redirectUri);
+  console.log("🔁 Final Auth URL:", authUrl);
 
-  const authUrl = new URL("https://accounts.spotify.com/authorize");
-  authUrl.searchParams.set("response_type", "code");
-  authUrl.searchParams.set("client_id", process.env.CLIENT_ID);
-  authUrl.searchParams.set("scope", scopes.join(" "));
-  authUrl.searchParams.set("redirect_uri", redirectUri);
-
-  res.redirect(authUrl.toString());
+  res.redirect(authUrl);
 });
 
 
 app.get("/callback", async (req, res) => {
-  const code = req.query.code || null;
+  const code = req.query.code;
+
+  if (!code) {
+    console.error("❌ No authorization code received.");
+    return res.status(400).send("Authorization failed. Please try logging in again.");
+  }
 
   try {
     const response = await axios.post('https://accounts.spotify.com/api/token', null, {
@@ -59,13 +61,20 @@ app.get("/callback", async (req, res) => {
 
     const access_token = response.data.access_token;
 
-    // For now, just send token to browser
-    // 🔍 Get user's top artists using the token
-const topArtistsResponse = await axios.get('https://api.spotify.com/v1/me/top/artists', {
-  headers: {
-    Authorization: `Bearer ${access_token}`
+    // ✅ Continue with your existing logic...
+    const topArtistsResponse = await axios.get('https://api.spotify.com/v1/me/top/artists', {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+
+    // ...rest of your code continues
+  } catch (error) {
+    console.error('❌ Error fetching access token:', error.response?.data || error.message);
+    res.status(500).send("Something went wrong during token exchange.");
   }
 });
+
 
 const topArtists = topArtistsResponse.data.items.slice(0, 5); // get top 5
 const userProfile = await axios.get('https://api.spotify.com/v1/me', {headers:{
