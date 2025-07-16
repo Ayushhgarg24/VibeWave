@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const qs = require('querystring');
 require("dotenv").config();
 
 const app = express();
@@ -38,21 +39,26 @@ app.get("/login", (req, res) => {
 // ✅ Spotify Callback Route
 app.get("/callback", async (req, res) => {
   const code = req.query.code || null;
+  if (!code) {
+    return res.status(400).send("Authorization code missing.");
+  }
 
   try {
     // 🔐 Exchange code for access token
-    const response = await axios.post('https://accounts.spotify.com/api/token', null, {
-      params: {
+    const response = await axios.post('https://accounts.spotify.com/api/token',
+      qs.stringify({
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: process.env.REDIRECT_URI,
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
-    });
+    );
 
     const access_token = response.data.access_token;
 
